@@ -9,9 +9,9 @@ from freight_management import __version__ as version
 setup(
 	name="freight_management",
 	version=version,
-	description="Freight Management",
-	author="Freight Management",
-	author_email="ali@test.com",
+	description="This module allows you to manage all freight operations (Air, Ocean, and Land)",
+	author="Solufy",
+	author_email="contact@solufy.in",
 	packages=find_packages(),
 	zip_safe=False,
 	include_package_data=True,

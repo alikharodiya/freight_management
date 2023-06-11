@@ -2,13 +2,31 @@ from . import __version__ as app_version
 
 app_name = "freight_management"
 app_title = "Freight Management"
-app_publisher = "Freight Management"
-app_description = "Freight Management"
-app_email = "ali@test.com"
+app_publisher = "Solufy"
+app_description = "This module allows you to manage all freight operations (Air, Ocean, and Land)"
+app_icon = "octicon octicon-file-directory"
+app_color = "grey"
+app_email = "contact@solufy.in"
 app_license = "MIT"
 
 # Includes in <head>
 # ------------------
+
+fixtures = [{
+    "doctype": "Workflow",
+        "filters": {
+            "name": [ "in", ["Direct Shipping Workflow"] ]
+            }
+        },
+        {
+    "doctype": "Workflow State"
+    },
+     {
+    "doctype": "Workflow Action Master"
+    }
+    ]
+
+
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/freight_management/css/freight_management.css"
@@ -34,8 +52,9 @@ app_license = "MIT"
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
+
 # Home Pages
-# ----------
+# --------
 
 # application home page (will override Website Settings)
 # home_page = "login"
@@ -50,15 +69,6 @@ app_license = "MIT"
 
 # automatically create page for each record of this doctype
 # website_generators = ["Web Page"]
-
-# Jinja
-# ----------
-
-# add methods and filters to jinja environment
-# jinja = {
-#	"methods": "freight_management.utils.jinja_methods",
-#	"filters": "freight_management.utils.jinja_filters"
-# }
 
 # Installation
 # ------------
@@ -83,11 +93,11 @@ app_license = "MIT"
 # Permissions evaluated in scripted ways
 
 # permission_query_conditions = {
-#	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
+# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
 # }
 #
 # has_permission = {
-#	"Event": "frappe.desk.doctype.event.event.has_permission",
+# 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
 
 # DocType Class
@@ -95,7 +105,7 @@ app_license = "MIT"
 # Override standard doctype classes
 
 # override_doctype_class = {
-#	"ToDo": "custom_app.overrides.CustomToDo"
+# 	"ToDo": "custom_app.overrides.CustomToDo"
 # }
 
 # Document Events
@@ -103,32 +113,45 @@ app_license = "MIT"
 # Hook on document methods and events
 
 # doc_events = {
-#	"*": {
-#		"on_update": "method",
-#		"on_cancel": "method",
-#		"on_trash": "method"
+# 	"*": {
+# 		"on_update": "method",
+# 		"on_cancel": "method",
+# 		"on_trash": "method"
 #	}
 # }
+
+doc_events = {
+    'Direct Shipping': {
+        'validate': [
+            'freight_management.freight_management.doctype.direct_shipping.direct_shipping.validate'
+        ],
+  },
+  'Custom Clearance': {
+        'validate': [
+            'freight_management.freight_management.doctype.custom_clearance.custom_clearance.validate'
+        ],
+  },
+}
 
 # Scheduled Tasks
 # ---------------
 
 # scheduler_events = {
-#	"all": [
-#		"freight_management.tasks.all"
-#	],
-#	"daily": [
-#		"freight_management.tasks.daily"
-#	],
-#	"hourly": [
-#		"freight_management.tasks.hourly"
-#	],
-#	"weekly": [
-#		"freight_management.tasks.weekly"
-#	],
-#	"monthly": [
-#		"freight_management.tasks.monthly"
-#	],
+# 	"all": [
+# 		"freight_management.tasks.all"
+# 	],
+# 	"daily": [
+# 		"freight_management.tasks.daily"
+# 	],
+# 	"hourly": [
+# 		"freight_management.tasks.hourly"
+# 	],
+# 	"weekly": [
+# 		"freight_management.tasks.weekly"
+# 	]
+# 	"monthly": [
+# 		"freight_management.tasks.monthly"
+# 	]
 # }
 
 # Testing
@@ -140,62 +163,56 @@ app_license = "MIT"
 # ------------------------------
 #
 # override_whitelisted_methods = {
-#	"frappe.desk.doctype.event.event.get_events": "freight_management.event.get_events"
+# 	"frappe.desk.doctype.event.event.get_events": "freight_management.event.get_events"
 # }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
 # override_doctype_dashboards = {
-#	"Task": "freight_management.task.get_dashboard_data"
+# 	"Task": "freight_management.task.get_dashboard_data"
 # }
 
 # exempt linked doctypes from being automatically cancelled
 #
 # auto_cancel_exempted_doctypes = ["Auto Repeat"]
 
-# Ignore links to specified DocTypes when deleting documents
-# -----------------------------------------------------------
-
-# ignore_links_on_delete = ["Communication", "ToDo"]
-
-# Request Events
-# ----------------
-# before_request = ["freight_management.utils.before_request"]
-# after_request = ["freight_management.utils.after_request"]
-
-# Job Events
-# ----------
-# before_job = ["freight_management.utils.before_job"]
-# after_job = ["freight_management.utils.after_job"]
 
 # User Data Protection
 # --------------------
 
-# user_data_fields = [
-#	{
-#		"doctype": "{doctype_1}",
-#		"filter_by": "{filter_by}",
-#		"redact_fields": ["{field_1}", "{field_2}"],
-#		"partial": 1,
-#	},
-#	{
-#		"doctype": "{doctype_2}",
-#		"filter_by": "{filter_by}",
-#		"partial": 1,
-#	},
-#	{
-#		"doctype": "{doctype_3}",
-#		"strict": False,
-#	},
-#	{
-#		"doctype": "{doctype_4}"
-#	}
-# ]
+user_data_fields = [
+	{
+		"doctype": "{doctype_1}",
+		"filter_by": "{filter_by}",
+		"redact_fields": ["{field_1}", "{field_2}"],
+		"partial": 1,
+	},
+	{
+		"doctype": "{doctype_2}",
+		"filter_by": "{filter_by}",
+		"partial": 1,
+	},
+	{
+		"doctype": "{doctype_3}",
+		"strict": False,
+	},
+	{
+		"doctype": "{doctype_4}"
+	}
+]
 
 # Authentication and authorization
 # --------------------------------
 
 # auth_hooks = [
-#	"freight_management.auth.validate"
+# 	"freight_management.auth.validate"
 # ]
+
+# Translation
+# --------------------------------
+
+# Make link fields search translated document names for these DocTypes
+# Recommended only for DocTypes which have limited documents with untranslated names
+# For example: Role, Gender, etc.
+# translated_search_doctypes = []
